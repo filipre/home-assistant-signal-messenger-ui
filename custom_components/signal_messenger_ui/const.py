@@ -14,6 +14,8 @@ SUBENTRY_TYPE_RECIPIENT: Final = "recipient"
 RECIPIENT_TYPE_NUMBER: Final = "number"
 RECIPIENT_TYPE_GROUP: Final = "group"
 
+GROUP_ID_PREFIX: Final = "group."
+
 TEXT_MODE_NORMAL: Final = "normal"
 TEXT_MODE_STYLED: Final = "styled"
 TEXT_MODES: Final = [TEXT_MODE_NORMAL, TEXT_MODE_STYLED]

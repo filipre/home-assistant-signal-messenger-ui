@@ -121,6 +121,31 @@ async def test_action_with_local_attachment(
     assert hass.states.get("notify.alice").state != "unknown"
 
 
+async def test_action_splits_groups_and_numbers(
+    hass: HomeAssistant,
+    aioclient_mock: AiohttpClientMocker,
+    setup_entry: MockConfigEntry,
+) -> None:
+    """Test groups and numbers are never sent in the same request."""
+    aioclient_mock.post(SEND_URL, json={"timestamp": "1"})
+    await hass.services.async_call(
+        DOMAIN,
+        "send_message",
+        {
+            ATTR_ENTITY_ID: ["notify.alice", "notify.family"],
+            "config_entry_id": setup_entry.entry_id,
+            "recipients": ["+491733333333", "group.adhoc=="],
+            "message": "Hi",
+            "text_mode": "styled",
+        },
+        blocking=True,
+    )
+    assert [p["recipients"] for p in _payloads(aioclient_mock)] == [
+        [ALICE, "+491733333333"],
+        [GROUP_ID, "group.adhoc=="],
+    ]
+
+
 async def test_action_path_not_allowed(
     hass: HomeAssistant, setup_entry: MockConfigEntry, tmp_path: Path
 ) -> None:

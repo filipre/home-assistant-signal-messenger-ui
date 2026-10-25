@@ -31,6 +31,7 @@ from .const import (
     ATTR_URLS,
     ATTR_VERIFY_SSL,
     DOMAIN,
+    GROUP_ID_PREFIX,
     MAX_ATTACHMENT_BYTES,
     SERVICE_SEND_MESSAGE,
     TEXT_MODE_NORMAL,
@@ -217,13 +218,22 @@ async def _async_send_message(call: ServiceCall) -> None:
 
     for (entry_id, mode), batch in batches.items():
         entry = _loaded_entry(hass, entry_id)
-        await async_send(
-            entry.runtime_data.client,
-            format_message(call.data[ATTR_MESSAGE], call.data.get(ATTR_TITLE), mode),
-            list(dict.fromkeys(batch)),
-            text_mode=mode,
-            base64_attachments=attachments or None,
-        )
+        unique = list(dict.fromkeys(batch))
+        # The REST API rejects groups and numbers in the same request.
+        groups = [r for r in unique if r.startswith(GROUP_ID_PREFIX)]
+        numbers = [r for r in unique if not r.startswith(GROUP_ID_PREFIX)]
+        for part in (numbers, groups):
+            if not part:
+                continue
+            await async_send(
+                entry.runtime_data.client,
+                format_message(
+                    call.data[ATTR_MESSAGE], call.data.get(ATTR_TITLE), mode
+                ),
+                part,
+                text_mode=mode,
+                base64_attachments=attachments or None,
+            )
 
     for entity in recorded:
         entity.record_notification()
