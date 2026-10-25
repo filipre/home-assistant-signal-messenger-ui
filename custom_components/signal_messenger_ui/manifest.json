@@ -1,13 +1,13 @@
 {
   "domain": "signal_messenger_ui",
   "name": "Signal Messenger UI",
-  "codeowners": [],
+  "codeowners": ["@filipre"],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/OWNER/home-assistant-signal-messenger-ui",
+  "documentation": "https://github.com/filipre/home-assistant-signal-messenger-ui",
   "integration_type": "service",
   "iot_class": "cloud_push",
-  "issue_tracker": "https://github.com/OWNER/home-assistant-signal-messenger-ui/issues",
+  "issue_tracker": "https://github.com/filipre/home-assistant-signal-messenger-ui/issues",
   "requirements": [],
   "version": "0.1.0"
 }
