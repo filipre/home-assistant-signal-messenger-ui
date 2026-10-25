@@ -1,0 +1,181 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to signal-cli-rest-api",
+        "description": "Enter the URL of your [signal-cli-rest-api](https://github.com/bbernhard/signal-cli-rest-api) instance.",
+        "data": {
+          "url": "URL",
+          "verify_ssl": "Verify SSL certificate"
+        },
+        "data_description": {
+          "url": "For example http://192.168.1.10:8080",
+          "verify_ssl": "Disable for self-signed certificates."
+        }
+      },
+      "account": {
+        "title": "Sender account",
+        "description": "Select the registered or linked Signal account that sends messages.",
+        "data": {
+          "number": "Phone number"
+        },
+        "data_description": {
+          "number": "International format, for example +491701234567."
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure signal-cli-rest-api",
+        "data": {
+          "url": "URL",
+          "verify_ssl": "Verify SSL certificate"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the REST API.",
+      "invalid_number": "Enter a phone number in international format (+491701234567) or a Signal UUID."
+    },
+    "abort": {
+      "already_configured": "This account is already configured.",
+      "reconfigure_successful": "Re-configuration was successful."
+    }
+  },
+  "config_subentries": {
+    "recipient": {
+      "entry_type": "Recipient",
+      "initiate_flow": {
+        "user": "Add recipient"
+      },
+      "step": {
+        "user": {
+          "title": "Add recipient",
+          "menu_options": {
+            "number": "Phone number",
+            "group": "Group"
+          }
+        },
+        "number": {
+          "title": "Add phone number",
+          "data": {
+            "name": "Name",
+            "recipient": "Phone number",
+            "text_mode": "Text mode"
+          },
+          "data_description": {
+            "recipient": "International format, for example +491701234567.",
+            "text_mode": "Styled text supports *italic*, **bold**, ~strikethrough~, ||spoiler|| and `monospace`."
+          }
+        },
+        "group": {
+          "title": "Add group",
+          "data": {
+            "name": "Name",
+            "recipient": "Group",
+            "text_mode": "Text mode"
+          },
+          "data_description": {
+            "name": "Leave empty to use the group name.",
+            "text_mode": "Styled text supports *italic*, **bold**, ~strikethrough~, ||spoiler|| and `monospace`."
+          }
+        },
+        "reconfigure": {
+          "title": "Change recipient",
+          "description": "Recipient: {recipient}",
+          "data": {
+            "name": "Name",
+            "text_mode": "Text mode"
+          }
+        }
+      },
+      "error": {
+        "invalid_number": "Enter a phone number in international format (+491701234567) or a Signal UUID."
+      },
+      "abort": {
+        "already_configured": "This recipient is already configured.",
+        "cannot_connect": "Failed to connect to the REST API.",
+        "no_groups": "The account is not a member of any group.",
+        "reconfigure_successful": "Re-configuration was successful."
+      }
+    }
+  },
+  "selector": {
+    "text_mode": {
+      "options": {
+        "normal": "Normal",
+        "styled": "Styled"
+      }
+    }
+  },
+  "exceptions": {
+    "send_failed": {
+      "message": "Sending the Signal message failed: {error}"
+    },
+    "path_not_allowed": {
+      "message": "Path {path} is not allowed. Add its folder to allowlist_external_dirs."
+    },
+    "url_not_allowed": {
+      "message": "URL {url} is not allowed. Add it to allowlist_external_urls."
+    },
+    "attachment_too_large": {
+      "message": "Attachment {attachment} is larger than {max_size} bytes."
+    },
+    "attachment_failed": {
+      "message": "Could not load attachment {attachment}: {error}"
+    },
+    "entry_not_found": {
+      "message": "Signal account {entry_id} not found."
+    },
+    "entry_not_loaded": {
+      "message": "Signal account {entry} is not loaded."
+    },
+    "invalid_entity": {
+      "message": "{entity_id} is not a Signal Messenger UI recipient."
+    },
+    "config_entry_required": {
+      "message": "Select a Signal account when sending to ad-hoc recipients."
+    },
+    "no_recipients": {
+      "message": "Select at least one recipient entity or enter recipients."
+    }
+  },
+  "services": {
+    "send_message": {
+      "name": "Send message",
+      "description": "Sends a Signal message with optional title, styled text and attachments.",
+      "fields": {
+        "message": {
+          "name": "Message",
+          "description": "The message text."
+        },
+        "title": {
+          "name": "Title",
+          "description": "Optional first line (bold in styled mode)."
+        },
+        "text_mode": {
+          "name": "Text mode",
+          "description": "Overrides the recipient's default text mode."
+        },
+        "attachments": {
+          "name": "Local files",
+          "description": "Paths of files to attach, for example /config/www/snapshot.jpg. The folder must be in allowlist_external_dirs."
+        },
+        "urls": {
+          "name": "URLs",
+          "description": "Files to download and attach. Must be in allowlist_external_urls. Max 50 MiB each."
+        },
+        "verify_ssl": {
+          "name": "Verify SSL",
+          "description": "Verify certificates when downloading URLs."
+        },
+        "config_entry_id": {
+          "name": "Signal account",
+          "description": "Sender account for ad-hoc recipients."
+        },
+        "recipients": {
+          "name": "Ad-hoc recipients",
+          "description": "Phone numbers or group IDs (group.xxx) not configured as recipients."
+        }
+      }
+    }
+  }
+}

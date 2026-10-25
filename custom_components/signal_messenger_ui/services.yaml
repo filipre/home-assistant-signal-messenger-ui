@@ -1,0 +1,47 @@
+send_message:
+  target:
+    entity:
+      integration: signal_messenger_ui
+      domain: notify
+  fields:
+    message:
+      required: true
+      example: "Motion detected in the garden"
+      selector:
+        text:
+          multiline: true
+    title:
+      example: "Alarm"
+      selector:
+        text:
+    text_mode:
+      selector:
+        select:
+          options:
+            - normal
+            - styled
+          translation_key: text_mode
+    attachments:
+      example: "/config/www/snapshot.jpg"
+      selector:
+        text:
+          multiple: true
+    urls:
+      example: "http://homeassistant.local:8123/local/snapshot.jpg"
+      selector:
+        text:
+          type: url
+          multiple: true
+    verify_ssl:
+      default: true
+      selector:
+        boolean:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: signal_messenger_ui
+    recipients:
+      example: "+491701234567"
+      selector:
+        text:
+          multiple: true
