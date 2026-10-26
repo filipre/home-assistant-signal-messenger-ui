@@ -1,7 +1,6 @@
 {
   "domain": "signal_messenger_ui",
   "name": "Signal Messenger UI",
-  "categories": ["messaging_notifications.chat_apps"],
   "codeowners": ["@filipre"],
   "config_flow": true,
   "dependencies": [],
