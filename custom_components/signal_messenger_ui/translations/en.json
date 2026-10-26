@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Connect to signal-cli-rest-api",
-        "description": "Enter the URL of your [signal-cli-rest-api](https://github.com/bbernhard/signal-cli-rest-api) instance.",
+        "description": "Enter the URL of your [signal-cli-rest-api]({docs_url}) instance.",
         "data": {
           "url": "URL",
           "verify_ssl": "Verify SSL certificate"

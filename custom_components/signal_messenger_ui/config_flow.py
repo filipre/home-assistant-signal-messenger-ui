@@ -43,6 +43,8 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
+DOCS_URL = "https://github.com/bbernhard/signal-cli-rest-api"
+
 # E.164 phone number or a Signal ACI (UUID).
 RECIPIENT_RE = re.compile(
     r"^(\+[1-9]\d{6,14}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$",
@@ -126,6 +128,7 @@ class SignalMessengerConfigFlow(ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=_server_schema(user_input or {}),
             errors=errors,
+            description_placeholders={"docs_url": DOCS_URL},
         )
 
     async def async_step_account(
